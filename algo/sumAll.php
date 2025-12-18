@@ -9,14 +9,8 @@
 
 <body>
     <?php
-    for ($i = 0; $i <= 20; $i++) {
-
-        if ($i % 2 === 0) {
-            echo "<p>pair</p>";
-        } else {
-            echo "<p>" . $i . "</p>";
-        }
-    }
+    $arr = [1, 6, 7, 4];
+    echo array_sum($arr);
     ?>
 </body>
 
