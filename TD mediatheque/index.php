@@ -11,6 +11,7 @@ $bdd = new PDO("mysql:host=localhost;dbname=mediatheque;charset=utf8", "root", "
 </head>
 <body>
     <a href="inscription.php">Inscription</a>
+    <a href="login.php">login</a>
 
     <a href="add_film.php">Ajouter un film</a>
 
