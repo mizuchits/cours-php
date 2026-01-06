@@ -17,7 +17,7 @@
         "admin" => password_hash("admin", PASSWORD_DEFAULT),
     ];
     if (isset($_POST['username']) && ($_POST['password'])) {
-        if ($_POST['username'] == "admin" && $_POST['password'] == password_verify('admin', $user['admin'])) {
+        if ($_POST['username'] == "admin" && $_POST['password'] == password_verify($_POST['password'], $user['admin'])) {
             header('Location: login_success.php');
             exit();
         } else {
