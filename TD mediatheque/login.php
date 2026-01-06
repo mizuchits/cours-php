@@ -1,7 +1,8 @@
 <?php
+session_start();
 $bdd = new PDO("mysql:host=localhost;dbname=mediatheque;charset=utf8", "root", "");
 
-if (!empty($_SESSION["nom"])) {
+if (!empty($_SESSION["id"])) {
     header('Location:index.php');
 }
 ?>
@@ -22,26 +23,26 @@ if (!empty($_SESSION["nom"])) {
     </form>
 
     <?php
-$request = $bdd->prepare('SELECT * FROM user');
-$request->execute([]);
-$resultat = $request->fetch();
+    $request = $bdd->prepare('SELECT * FROM user');
+    $request->execute([]);
 
-if (!empty($_POST['nom']) && ($_POST['password'])) {
-    $nom = $_POST['nom'];
-    $password = $_POST['password'];
-    $password_check = password_verify($_POST['password'], 'SELECT password FROM user WHERE nom = "'.$nom.'"');
-    var_dump(password_verify($_POST['password'], 'SELECT password FROM user WHERE nom = "'.$nom.'"'));
+    if (!empty($_POST['nom']) && ($_POST['password'])) {
+        $nom = $_POST['nom'];
+        $password = $_POST['password'];
+        while ($data = $request->fetch()) {
+            $password_check = password_verify($password, $data['password']);
+            if ($data['nom'] == $nom && $password_check == $password) {
+                session_start();
+                $_SESSION['id'] = $data['id'];
+                header('Location:index.php');
+            } else {
+                echo'non';
+            }
+        }
 
-    if ($resultat && $password_check == $password) {
-        session_start();
-        $_SESSION['nom'] = $_POST['nom'];
-        $_SESSION['password'] = $_POST['password'];
-        HEADER('Location:index.php');
-    } else {
-        
+
     }
-}
-?>
+    ?>
 </body>
 
 </html>

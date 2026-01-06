@@ -1,5 +1,9 @@
 <?php
+session_start();
 $bdd = new PDO("mysql:host=localhost;dbname=mediatheque;charset=utf8", "root", "");
+if (!empty($_SESSION["id"])) {
+    header('Location:index.php');
+}
 ?>
 
 <!DOCTYPE html>
