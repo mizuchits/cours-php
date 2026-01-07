@@ -21,9 +21,9 @@ $bdd = new PDO("mysql:host=localhost;dbname=mediatheque;charset=utf8", "root", "
             echo '<img src="'.$data['affiche'].'" alt="'.$data['titre'].'">';
         }
         echo '<p>'.$data['synopsis'].'</p>';
-        if ($_SESSION['id'] == $data_film['id']) {
-        echo'<a href="edit_film.php">Modifier</a>';
-        echo'<a href="delete_film.php">Suppprimer</a>';
+        if ($_SESSION['id'] == $data_film['user_id']) {
+        echo'<a href="edit_film.php?user_id='.$data_film['user_id'].'&id='.$data_film['id'].'">Modifier</a>';
+        echo'<a href="delete_film.php?user_id='.$data_film['user_id'].'&id='.$data_film['id'].'">Suppprimer</a>';
         }
     }
     ?>
