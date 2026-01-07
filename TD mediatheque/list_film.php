@@ -18,46 +18,17 @@ $bdd = new PDO("mysql:host=localhost;dbname=mediatheque;charset=utf8", "root", "
 
     while ($data_film = $request_film->fetch()) {
         echo '<p>' . $data_film['titre'] . ' ' . $data_film['realisateur'] . ' ' . $data_film['genre'] . ' ' . $data_film['duree'] . '</p>';
-        if (!file_exists('film/' . $data_film['titre'] . '.php')) {
-            touch('film/' . $data_film['titre'] . '.php');
-            file_put_contents(
-                'film/' . $data_film['titre'] . '.php',
-                '<?php
-session_start();
-$bdd = new PDO("mysql:host=localhost;dbname=mediatheque;charset=utf8", "root", "");
-$titre = $_GET["titre"];
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?php echo $titre; ?></title>
-</head>
-<body>
-
-<?php
-echo "<h1>" . $titre . "</h1>";
-
-$request_film = $bdd->prepare("SELECT * FROM film WHERE titre = \'".$titre."\'");
-$request_film->execute();
-
-while ($data_film = $request_film->fetch()) {
-    echo "<p>" . $data_film[\'synopsis\'] . "</p>";
-}
-?>
-
-</body>
-</html>'
-            );
-
-        } elseif (file_exists('film/' . $data_film['titre'] . '.php')) {
-
+        if (!empty($data_film['affiche'])) {
+            echo '<img src="'.$data_film['affiche'].'" alt="'.$data_film['titre'].'>';
         }
-        echo '<a href="./film/' . $data_film['titre'] . '.php?titre=' . $data_film['titre'] . '">test</a>';
+            
+        echo '<a href="voirplus.php?id='.$data_film['id'].'">Voir plus</a>';
+        if ($_SESSION['id'] == $data_film['id']) {
+        echo'<a href="edit_film.php">Modifier</a>';
+        echo'<a href="delete_film.php">Suppprimer</a>';
+        }
     }
-
     ?>
-
 </body>
 
 </html>
